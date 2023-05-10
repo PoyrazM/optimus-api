@@ -12,10 +12,10 @@ import java.time.format.DateTimeFormatter;
 @ControllerAdvice
 public class OptimusApiExceptionHandler {
 
-    private LocalDateTime now = LocalDateTime.now();
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private final LocalDateTime now = LocalDateTime.now();
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-    private String formattedDateTime = now.format(formatter);
+    private final String formattedDateTime = now.format(formatter);
 
     @ExceptionHandler
     public ResponseEntity<OptimusErrorResponse> handleException(OptimusMemberNotFoundException exception) {
@@ -33,7 +33,7 @@ public class OptimusApiExceptionHandler {
     public ResponseEntity<OptimusErrorResponse> handleException(OptimusMemberNotDeletedException exception) {
 
         OptimusErrorResponse errorResponse = OptimusErrorResponse.builder()
-                .status(HttpStatus.NOT_FOUND.value())
+                .status(HttpStatus.BAD_REQUEST.value())
                 .message(exception.getMessage())
                 .timeStamp(formattedDateTime)
                 .build();
